@@ -1,0 +1,95 @@
+import React, { useEffect } from "react";
+import type { LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { useLoaderData, useNavigate, useParams } from "@remix-run/react";
+import Editor from "~/components/applicationComponents/Editor";
+import Scene from "~/components/applicationComponents/Scene";
+import CamFollowerScene from "~/components/applicationComponents/CamFollowerScene";
+import Engine from "~/components/modelComponents/Engine";
+import { EditorState, useEditorStore } from "~/state";
+import PistonAssembly from "~/components/modelComponents/PistonAssembly";
+
+export const loader: LoaderFunction = async () => {
+  const complexEditorState: EditorState = {
+    direction: "row",
+    subGroups: [
+      {
+        activeTabIndex: 1,
+        tabs: [
+          { name: "Tab A", id: "abc123", component: "box" },
+          { name: "Tab B", id: "xyz789", component: "sphere" },
+          { name: "Tab C", id: "xyz789", component: "cone" },
+        ],
+      },
+      {
+        direction: "col",
+        subGroups: [
+          {
+            activeTabIndex: 1,
+            tabs: [
+              { name: "Tab D", id: "abc123", component: "cylinder" },
+              { name: "Tab E", id: "xyz789", component: "cone" },
+            ],
+          },
+          {
+            direction: "row",
+            subGroups: [
+              {
+                activeTabIndex: 0,
+                tabs: [
+                  { name: "Tab F", id: "abc123", component: "sphere" },
+                  { name: "Tab G", id: "xyz789", component: "cone" },
+                ],
+              },
+              {
+                activeTabIndex: 1,
+                tabs: [
+                  { name: "Tab H", id: "abc123", component: "cone" },
+                  { name: "Tab I", id: "xyz789", component: "cylinder" },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+
+  const simpleEditorState: EditorState = {
+    activeTabIndex: 0,
+    tabs: [
+      { name: "Tab A", id: "abc123", component: "box" },
+      { name: "Tab B", id: "xyz123", component: "sphere" },
+    ],
+  };
+
+  return json(complexEditorState);
+};
+
+export default function () {
+  const { navLevel1 } = useParams();
+  const backendEditorState = useLoaderData<EditorState>();
+  const { editorState, setEditorState } = useEditorStore();
+  useEffect(() => {
+    setEditorState(backendEditorState); // TODO: look into how to pass in state to initialization (prev line) instead of setting it here
+  }, []);
+
+  const navigate = useNavigate();
+
+  return (
+    <div className="w-full h-full">
+      {navLevel1 == "model" && <Editor state={editorState} />}
+      {navLevel1 == "code" && (
+        <Scene>
+          <Engine navigate={navigate} />
+        </Scene>
+      )}
+      {navLevel1 == "analysis" && <CamFollowerScene />}
+      {navLevel1 == "settings" && (
+        <Scene>
+          <PistonAssembly />
+        </Scene>
+      )}
+    </div>
+  );
+}
