@@ -19,7 +19,7 @@ export default function () {
     <div className="hero h-screen">
       <div className="hero-content text-center">
         <div className="max-w-md">
-          <h1 className="text-5xl font-bold">Browser Based CAD Tool</h1>
+          <h1 className="text-5xl font-bold">3s1t Editor</h1>
           <p className="py-6">
             {libraries.map((library, i) => (
               <span key={i}>
