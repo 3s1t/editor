@@ -276,3 +276,35 @@ export const useEditorStore = create<EditorStore>()((set) => ({
       })
     ),
 }));
+
+export type EditorTreeNode = {
+  type: "rowGroup" | "colGroup" | "tabGroup" | "tab";
+  id: string;
+  children?: EditorTreeNode[];
+};
+
+export function validateTree(tree: EditorTreeNode): boolean {
+  if (tree.type == "tab") {
+    if (tree.children != undefined) throw "a tab can't have children";
+    // add additional checks for tab here
+    return true;
+  } else {
+    if (!Array.isArray(tree.children)) throw "a group must have children";
+
+    if (tree.type == "tabGroup") {
+      if (tree.children.length < 1)
+        throw "a tab group must have at least 1 child";
+      // add additional checks for tabGroup here
+    } else {
+      if (tree.children.length < 2)
+        throw "a split group (rowGroup or colGroup) must have at least 1 child";
+      for (const child of tree.children) {
+        if (tree.type == child.type)
+          throw "a split group (rowGroup or colGroup) can't have the same split group as its child";
+      }
+      // add additional checks for splitGroup here
+    }
+    // recursive call to validateTree for each child
+    return tree.children.every((child) => validateTree(child));
+  }
+}
