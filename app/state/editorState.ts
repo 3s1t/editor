@@ -277,11 +277,50 @@ export const useEditorStore = create<EditorStore>()((set) => ({
     ),
 }));
 
+// attempt refactor to simplify data model
+
 export type EditorTreeNode = {
   type: "rowGroup" | "colGroup" | "tabGroup" | "tab";
   id: string;
+  activeTab?: number;
   children?: EditorTreeNode[];
 };
+
+export type EditorStore2 = {
+  editorState: EditorTreeNode;
+  setEditorState: (state: EditorTreeNode) => void;
+  setTabActive: (breadcrumbs: number[]) => void;
+  deleteTab: (breadcrumbs: number[]) => void;
+  moveTabOntoTab: (breadcrumbsFrom: number[], breadcrumbsTo: number[]) => void;
+  moveTabOntoView: (
+    breadcrumbsFrom: number[],
+    breadcrumbsTo: number[],
+    direction: "top" | "bottom" | "left" | "right" | "center"
+  ) => void;
+};
+
+export const useEditorStore2 = create<EditorStore2>()((set) => ({
+  editorState: { type: "tabGroup", id: "001" },
+
+  setEditorState: (newState: EditorTreeNode) =>
+    set((baseStore) =>
+      produce(baseStore, (draftStore) => {
+        draftStore.editorState = newState;
+      })
+    ),
+
+  setTabActive: (breadcrumbs) =>
+    set((baseStore) => produce(baseStore, (draftStore) => {})),
+
+  deleteTab: (breadcrumbs) =>
+    set((baseStore) => produce(baseStore, (draftStore) => {})),
+
+  moveTabOntoTab: (breadcrumbsFrom, breadcrumbsTo) =>
+    set((baseStore) => produce(baseStore, (draftStore) => {})),
+
+  moveTabOntoView: (breadcrumbsFrom, breadcrumbsTo, viewDropArea) =>
+    set((baseStore) => produce(baseStore, (draftStore) => {})),
+}));
 
 export function validateTree(tree: EditorTreeNode): boolean {
   if (tree.type == "tab") {
