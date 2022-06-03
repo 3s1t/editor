@@ -24,10 +24,10 @@ export const fourTabs1activeTabIndex: GroupTreeNode = {
   id: "001",
   activeTabIndex: 1,
   children: [
-    { type: "tab", id: "abc123", component: "box" },
-    { type: "tab", id: "xyz789", component: "sphere" },
-    { type: "tab", id: "a", component: "cone" },
-    { type: "tab", id: "b", component: "cylinder" },
+    { type: "tab", id: "001", component: "box" },
+    { type: "tab", id: "002", component: "sphere" },
+    { type: "tab", id: "003", component: "cone" },
+    { type: "tab", id: "004", component: "cylinder" },
   ],
 };
 

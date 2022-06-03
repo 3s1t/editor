@@ -87,6 +87,15 @@ export const useEditorStore = create<EditorStore>()((set) => ({
         // make sure parent is a tabGroup
         if (parent.type != "tabGroup") throw "Parent must be a tab group";
 
+        // update activeTabIndex
+        if (parent.activeTabIndex == tabBreadcrumb) {
+          // tab to be deleted is active
+          if (tabBreadcrumb == parent.children.length - 1)
+            parent.activeTabIndex--;
+        } else {
+          // tab to be deleted is not active
+          if (tabBreadcrumb < parent.activeTabIndex) parent.activeTabIndex--;
+        }
         // remove tab from children
         parent.children?.splice(tabBreadcrumb, 1);
       })

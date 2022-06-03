@@ -69,7 +69,7 @@ describe("State management", () => {
 
           expect(
             // @ts-ignore
-            result.current.editorState.subGroups[1].subGroups[1].subGroups[1]
+            result.current.editorState.children[1].children[1].children[1]
               .activeTabIndex
           ).toBe(1);
 
@@ -79,7 +79,7 @@ describe("State management", () => {
 
           expect(
             // @ts-ignore
-            result.current.editorState.subGroups[1].subGroups[1].subGroups[1]
+            result.current.editorState.children[1].children[1].children[1]
               .activeTabIndex
           ).toBe(0);
         });
@@ -100,7 +100,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(1);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(4);
+              expect(result.current.editorState.children.length).toBe(4);
 
               act(() => {
                 result.current.deleteTab([0]);
@@ -109,7 +109,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(0);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(3);
+              expect(result.current.editorState.children.length).toBe(3);
             });
           });
 
@@ -124,7 +124,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(0);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(4);
+              expect(result.current.editorState.children.length).toBe(4);
 
               act(() => {
                 result.current.deleteTab([0]);
@@ -134,7 +134,7 @@ describe("State management", () => {
               expect(result.current.editorState.activeTabIndex).toBe(0);
 
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(3);
+              expect(result.current.editorState.children.length).toBe(3);
             });
           });
         });
@@ -152,7 +152,7 @@ describe("State management", () => {
                 // @ts-ignore
                 expect(result.current.editorState.activeTabIndex).toBe(2);
                 // @ts-ignore
-                expect(result.current.editorState.tabs.length).toBe(4);
+                expect(result.current.editorState.children.length).toBe(4);
 
                 act(() => {
                   result.current.deleteTab([1]);
@@ -161,7 +161,7 @@ describe("State management", () => {
                 // @ts-ignore
                 expect(result.current.editorState.activeTabIndex).toBe(1);
                 // @ts-ignore
-                expect(result.current.editorState.tabs.length).toBe(3);
+                expect(result.current.editorState.children.length).toBe(3);
               });
             });
 
@@ -176,7 +176,7 @@ describe("State management", () => {
                 // @ts-ignore
                 expect(result.current.editorState.activeTabIndex).toBe(2);
                 // @ts-ignore
-                expect(result.current.editorState.tabs.length).toBe(4);
+                expect(result.current.editorState.children.length).toBe(4);
 
                 act(() => {
                   result.current.deleteTab([3]);
@@ -185,7 +185,7 @@ describe("State management", () => {
                 // @ts-ignore
                 expect(result.current.editorState.activeTabIndex).toBe(2);
                 // @ts-ignore
-                expect(result.current.editorState.tabs.length).toBe(3);
+                expect(result.current.editorState.children.length).toBe(3);
               });
             });
           });
@@ -201,7 +201,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(2);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(4);
+              expect(result.current.editorState.children.length).toBe(4);
 
               act(() => {
                 result.current.deleteTab([2]);
@@ -210,7 +210,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(2);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(3);
+              expect(result.current.editorState.children.length).toBe(3);
             });
           });
         });
@@ -227,7 +227,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(1);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(4);
+              expect(result.current.editorState.children.length).toBe(4);
 
               act(() => {
                 result.current.deleteTab([3]);
@@ -236,7 +236,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(1);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(3);
+              expect(result.current.editorState.children.length).toBe(3);
             });
           });
 
@@ -251,7 +251,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(3);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(4);
+              expect(result.current.editorState.children.length).toBe(4);
 
               act(() => {
                 result.current.deleteTab([3]);
@@ -260,7 +260,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(2);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(3);
+              expect(result.current.editorState.children.length).toBe(3);
             });
           });
         });
@@ -278,14 +278,16 @@ describe("State management", () => {
               result.current.moveTabOntoTab([0], [2]);
             });
 
+            const children = result.current.editorState.children;
+
             // @ts-ignore
-            expect(result.current.editorState.tabs[0].name).toBe("Tab B");
+            expect(children[0].id).toBe("002");
             // @ts-ignore
-            expect(result.current.editorState.tabs[1].name).toBe("Tab C");
+            expect(children[1].id).toBe("003");
             // @ts-ignore
-            expect(result.current.editorState.tabs[2].name).toBe("Tab A");
+            expect(children[2].id).toBe("001");
             // @ts-ignore
-            expect(result.current.editorState.tabs[3].name).toBe("Tab D");
+            expect(children[3].id).toBe("004");
           });
         });
         describe.skip("origin tab: first, destination tab: last", () => {});
@@ -309,7 +311,7 @@ describe("State management", () => {
       describe.skip("in a different group", () => {});
     });
 
-    describe("moveTabOntoView", () => {
+    describe.skip("moveTabOntoView", () => {
       describe("within the same group", () => {
         describe("center", () => {
           describe("simple", () => {
