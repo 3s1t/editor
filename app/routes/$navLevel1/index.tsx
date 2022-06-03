@@ -6,9 +6,13 @@ import Editor from "~/components/applicationComponents/Editor";
 import Scene from "~/components/applicationComponents/Scene";
 import CamFollowerScene from "~/components/applicationComponents/CamFollowerScene";
 import Engine from "~/components/modelComponents/Engine";
-import { EditorState, useEditorStore } from "~/state";
+import { EditorState } from "~/state";
 import PistonAssembly from "~/components/modelComponents/PistonAssembly";
-import { EditorTreeNode, useEditorStore } from "~/state/editorState";
+import {
+  EditorTreeNode,
+  GroupTreeNode,
+  useEditorStore,
+} from "~/state/editorState";
 
 export const loader: LoaderFunction = async () => {
   const complexEditorState: EditorState = {
@@ -64,7 +68,7 @@ export const loader: LoaderFunction = async () => {
     ],
   };
 
-  const simpleEditorState2: EditorTreeNode = {
+  const simpleEditorState2: GroupTreeNode = {
     type: "tabGroup",
     id: "001",
     activeTabIndex: 0,
@@ -82,13 +86,14 @@ export const loader: LoaderFunction = async () => {
     ],
   };
 
-  const complexEditorState2: EditorTreeNode = {
+  const complexEditorState2: GroupTreeNode = {
     type: "rowGroup",
     id: "001",
     children: [
       {
         type: "tabGroup",
         id: "002",
+        activeTabIndex: 0,
         children: [
           {
             type: "tab",
@@ -109,6 +114,7 @@ export const loader: LoaderFunction = async () => {
           {
             type: "tabGroup",
             id: "006",
+            activeTabIndex: 1,
             children: [
               {
                 type: "tab",
@@ -129,6 +135,7 @@ export const loader: LoaderFunction = async () => {
               {
                 type: "tabGroup",
                 id: "010",
+                activeTabIndex: 0,
                 children: [
                   {
                     type: "tab",
@@ -145,6 +152,7 @@ export const loader: LoaderFunction = async () => {
               {
                 type: "tabGroup",
                 id: "013",
+                activeTabIndex: 0,
                 children: [
                   {
                     type: "tab",
@@ -170,7 +178,7 @@ export const loader: LoaderFunction = async () => {
 
 export default function () {
   const { navLevel1 } = useParams();
-  const backendEditorState = useLoaderData<EditorTreeNode>();
+  const backendEditorState = useLoaderData<GroupTreeNode>();
   const { editorState, setEditorState } = useEditorStore();
   useEffect(() => {
     setEditorState(backendEditorState); // TODO: look into how to pass in state to initialization (prev line) instead of setting it here

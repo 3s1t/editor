@@ -21,16 +21,16 @@ export interface TabGroupTreeNode extends TreeNode {
 
 export interface SplitGroupTreeNode extends TreeNode {
   type: "rowGroup" | "colGroup";
-  children: (TabTreeNode | SplitGroupTreeNode)[];
+  children: (TabGroupTreeNode | SplitGroupTreeNode)[];
 }
 
 export type GroupTreeNode = TabGroupTreeNode | SplitGroupTreeNode;
 
 export type EditorTreeNode = TabTreeNode | GroupTreeNode;
 
-export type EditorStore2 = {
-  editorState: EditorTreeNode;
-  setEditorState: (state: EditorTreeNode) => void;
+export type EditorStore = {
+  editorState: GroupTreeNode;
+  setEditorState: (state: GroupTreeNode) => void;
   setTabActive: (breadcrumbs: number[]) => void;
   deleteTab: (breadcrumbs: number[]) => void;
   moveTabOntoTab: (breadcrumbsFrom: number[], breadcrumbsTo: number[]) => void;
@@ -41,7 +41,7 @@ export type EditorStore2 = {
   ) => void;
 };
 
-export const useEditorStore = create<EditorStore2>()((set) => ({
+export const useEditorStore = create<EditorStore>()((set) => ({
   editorState: {
     type: "tabGroup",
     id: "001",
@@ -49,7 +49,7 @@ export const useEditorStore = create<EditorStore2>()((set) => ({
     children: [{ type: "tab", id: "002", component: "box" }],
   },
 
-  setEditorState: (newState: EditorTreeNode) =>
+  setEditorState: (newState: GroupTreeNode) =>
     set((baseStore) =>
       produce(baseStore, (draftStore) => {
         draftStore.editorState = newState;
@@ -157,17 +157,18 @@ function getItemAtBreadcrumbs(
 }
 
 export function validateTree(tree: EditorTreeNode): boolean {
-  if (tree.type == "tab") {
-    if ("children" in tree) throw "a tab can't have children";
+  if (!("children" in tree)) {
+    if (tree.type == "tab") throw "a tab can't have children";
     // add additional checks for tab here
     return true;
   } else {
     if (!Array.isArray(tree.children)) throw "a group must have children";
-
     if (tree.type == "tabGroup") {
       if (tree.children.length < 1)
         throw "a tab group must have at least 1 child";
       // add additional checks for tabGroup here
+      // recursive call to validateTree for each child
+      return tree.children.every(validateTree);
     } else {
       if (tree.children.length < 2)
         throw "a split group (rowGroup or colGroup) must have at least 1 child";
@@ -176,8 +177,8 @@ export function validateTree(tree: EditorTreeNode): boolean {
           throw "a split group (rowGroup or colGroup) can't have the same split group as its child";
       }
       // add additional checks for splitGroup here
+      // recursive call to validateTree for each child
+      return tree.children.every(validateTree);
     }
-    // recursive call to validateTree for each child
-    return tree.children.every((child) => validateTree(child));
   }
 }

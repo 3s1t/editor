@@ -33,6 +33,7 @@ describe("validateTree", () => {
             {
               type: "tabGroup",
               id: "002",
+              activeTabIndex: 0,
               children: [
                 {
                   type: "tab",
@@ -49,6 +50,7 @@ describe("validateTree", () => {
             {
               type: "tabGroup",
               id: "005",
+              activeTabIndex: 0,
               children: [
                 {
                   type: "tab",
