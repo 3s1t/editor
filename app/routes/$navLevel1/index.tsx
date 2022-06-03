@@ -8,6 +8,7 @@ import CamFollowerScene from "~/components/applicationComponents/CamFollowerScen
 import Engine from "~/components/modelComponents/Engine";
 import { EditorState, useEditorStore } from "~/state";
 import PistonAssembly from "~/components/modelComponents/PistonAssembly";
+import { EditorTreeNode, useEditorStore2 } from "~/state/editorState";
 
 export const loader: LoaderFunction = async () => {
   const complexEditorState: EditorState = {
@@ -63,13 +64,29 @@ export const loader: LoaderFunction = async () => {
     ],
   };
 
-  return json(complexEditorState);
+  const simpleEditorState2: EditorTreeNode = {
+    type: "tabGroup",
+    id: "001",
+    activeTabIndex: 0,
+    children: [
+      {
+        type: "tab",
+        id: "002",
+      },
+      {
+        type: "tab",
+        id: "003",
+      },
+    ],
+  };
+
+  return json(simpleEditorState2);
 };
 
 export default function () {
   const { navLevel1 } = useParams();
-  const backendEditorState = useLoaderData<EditorState>();
-  const { editorState, setEditorState } = useEditorStore();
+  const backendEditorState = useLoaderData<EditorTreeNode>();
+  const { editorState, setEditorState } = useEditorStore2();
   useEffect(() => {
     setEditorState(backendEditorState); // TODO: look into how to pass in state to initialization (prev line) instead of setting it here
   }, []);
@@ -78,7 +95,7 @@ export default function () {
 
   return (
     <div className="w-full h-full">
-      {navLevel1 == "model" && <Editor state={editorState} />}
+      {navLevel1 == "model" && <Editor tree={editorState} />}
       {navLevel1 == "code" && (
         <Scene>
           <Engine navigate={navigate} />

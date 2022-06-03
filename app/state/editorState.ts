@@ -282,8 +282,8 @@ export const useEditorStore = create<EditorStore>()((set) => ({
 export type EditorTreeNode = {
   type: "rowGroup" | "colGroup" | "tabGroup" | "tab";
   id: string;
-  activeTab?: number;
-  children?: EditorTreeNode[];
+  activeTabIndex?: number; // only for tabGroups
+  children?: EditorTreeNode[]; // only for groups
 };
 
 export type EditorStore2 = {
@@ -310,7 +310,23 @@ export const useEditorStore2 = create<EditorStore2>()((set) => ({
     ),
 
   setTabActive: (breadcrumbs) =>
-    set((baseStore) => produce(baseStore, (draftStore) => {})),
+    set((baseStore) =>
+      produce(baseStore, (draftStore) => {
+        const parentBreadcrumbs: number[] = breadcrumbs.slice(0, -1);
+        const tabBreadcrumb: number = breadcrumbs[breadcrumbs.length - 1];
+        // get parent node
+        const parent = getItemAtBreadcrumbs2(
+          draftStore.editorState,
+          parentBreadcrumbs
+        );
+
+        // make sure parent is a tabGroup
+        if (parent.type != "tabGroup") throw "Parent must be a tab group";
+
+        // change activeTabIndex to tab index
+        parent.activeTabIndex = tabBreadcrumb;
+      })
+    ),
 
   deleteTab: (breadcrumbs) =>
     set((baseStore) => produce(baseStore, (draftStore) => {})),
@@ -321,6 +337,18 @@ export const useEditorStore2 = create<EditorStore2>()((set) => ({
   moveTabOntoView: (breadcrumbsFrom, breadcrumbsTo, viewDropArea) =>
     set((baseStore) => produce(baseStore, (draftStore) => {})),
 }));
+
+function getItemAtBreadcrumbs2(
+  tree: EditorTreeNode,
+  breadcrumbs: number[]
+): EditorTreeNode {
+  let pointer: EditorTreeNode = tree;
+  breadcrumbs.forEach((breadcrumb) => {
+    if (pointer.children) pointer = pointer.children[breadcrumb];
+  });
+  if (!pointer) throw "invalid breadcrumbs/tree combination";
+  return pointer;
+}
 
 export function validateTree(tree: EditorTreeNode): boolean {
   if (tree.type == "tab") {
