@@ -82,7 +82,90 @@ export const loader: LoaderFunction = async () => {
     ],
   };
 
-  return json(simpleEditorState2);
+  const complexEditorState2: EditorTreeNode = {
+    type: "rowGroup",
+    id: "001",
+    children: [
+      {
+        type: "tabGroup",
+        id: "002",
+        children: [
+          {
+            type: "tab",
+            id: "003",
+            component: "box",
+          },
+          {
+            type: "tab",
+            id: "004",
+            component: "sphere",
+          },
+        ],
+      },
+      {
+        type: "colGroup",
+        id: "005",
+        children: [
+          {
+            type: "tabGroup",
+            id: "006",
+            children: [
+              {
+                type: "tab",
+                id: "007",
+                component: "cylinder",
+              },
+              {
+                type: "tab",
+                id: "008",
+                component: "sphere",
+              },
+            ],
+          },
+          {
+            type: "rowGroup",
+            id: "009",
+            children: [
+              {
+                type: "tabGroup",
+                id: "010",
+                children: [
+                  {
+                    type: "tab",
+                    id: "011",
+                    component: "cone",
+                  },
+                  {
+                    type: "tab",
+                    id: "012",
+                    component: "sphere",
+                  },
+                ],
+              },
+              {
+                type: "tabGroup",
+                id: "013",
+                children: [
+                  {
+                    type: "tab",
+                    id: "014",
+                    component: "sphere",
+                  },
+                  {
+                    type: "tab",
+                    id: "015",
+                    component: "sphere",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+
+  return json(complexEditorState2);
 };
 
 export default function () {
