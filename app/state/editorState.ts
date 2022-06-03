@@ -284,6 +284,7 @@ export type EditorTreeNode = {
   id: string;
   activeTabIndex?: number; // only for tabGroups
   children?: EditorTreeNode[]; // only for groups
+  component?: "box" | "sphere" | "cone" | "cylinder";
 };
 
 export type EditorStore2 = {

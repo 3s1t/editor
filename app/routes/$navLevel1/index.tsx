@@ -72,10 +72,12 @@ export const loader: LoaderFunction = async () => {
       {
         type: "tab",
         id: "002",
+        component: "box",
       },
       {
         type: "tab",
         id: "003",
+        component: "sphere",
       },
     ],
   };

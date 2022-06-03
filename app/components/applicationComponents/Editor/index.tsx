@@ -5,12 +5,6 @@ import { useDrop, useDrag } from "react-dnd";
 
 import Scene from "~/components/applicationComponents/Scene";
 
-// import {
-//   EditorState,
-//   SplitGroupState,
-//   useEditorStore,
-//   TabState,
-// } from "~/state";
 import { XIcon } from "../Icon";
 import { EditorTreeNode, useEditorStore2 } from "~/state/editorState";
 
@@ -67,8 +61,11 @@ function DraggableTab({
     },
   });
 
-  // const { setTabActive, deleteTab, moveTabOntoAnotherTab } = useEditorStore();
-  const { setTabActive } = useEditorStore2();
+  const {
+    setTabActive,
+    // deleteTab,
+    // moveTabOntoAnotherTab
+  } = useEditorStore2();
 
   // Drop Zone 1
   const [, tabDropRef] = useDrop({
@@ -118,12 +115,10 @@ function TabGroup({
 
   // determine which model is shown in the viewer
   let ActiveComponent;
-  if (
-    children[activeTabIndex]
-    // && componentMap[tabs[activeTabIndex].component]
-  ) {
-    // ActiveComponent = componentMap[tabs[activeTabIndex].component];
-    ActiveComponent = componentMap["box"];
+  if (children[activeTabIndex] && children[activeTabIndex].component) {
+    const componentType = children[activeTabIndex].component;
+    if (!componentType) throw "component type invalid";
+    ActiveComponent = componentMap[componentType];
   } else {
     ActiveComponent = () => (
       <Html>
