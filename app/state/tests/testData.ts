@@ -1,110 +1,132 @@
-import { EditorState } from "..";
+import { GroupTreeNode } from "../editorState";
 
-export const oneTabState: EditorState = {
+export const oneTabState: GroupTreeNode = {
+  type: "tabGroup",
+  id: "001",
   activeTabIndex: 0,
-  tabs: [{ name: "Tab A", id: "abc123", component: "box" }],
+  children: [{ type: "tab", id: "abc123", component: "box" }],
 };
 
-export const fourTabs0activeTabIndex: EditorState = {
+export const fourTabs0activeTabIndex: GroupTreeNode = {
+  type: "tabGroup",
+  id: "001",
   activeTabIndex: 0,
-  tabs: [
-    { name: "Tab A", id: "abc123", component: "box" },
-    { name: "Tab B", id: "xyz789", component: "sphere" },
-    { name: "Tab C", id: "a", component: "cone" },
-    { name: "Tab D", id: "b", component: "cylinder" },
+  children: [
+    { type: "tab", id: "abc123", component: "box" },
+    { type: "tab", id: "xyz789", component: "sphere" },
+    { type: "tab", id: "a", component: "cone" },
+    { type: "tab", id: "b", component: "cylinder" },
   ],
 };
 
-export const fourTabs1activeTabIndex: EditorState = {
+export const fourTabs1activeTabIndex: GroupTreeNode = {
+  type: "tabGroup",
+  id: "001",
   activeTabIndex: 1,
-  tabs: [
-    { name: "Tab A", id: "abc123", component: "box" },
-    { name: "Tab B", id: "xyz789", component: "sphere" },
-    { name: "Tab C", id: "a", component: "cone" },
-    { name: "Tab D", id: "b", component: "cylinder" },
+  children: [
+    { type: "tab", id: "abc123", component: "box" },
+    { type: "tab", id: "xyz789", component: "sphere" },
+    { type: "tab", id: "a", component: "cone" },
+    { type: "tab", id: "b", component: "cylinder" },
   ],
 };
 
-export const fourTabs2activeTabIndex: EditorState = {
+export const fourTabs2activeTabIndex: GroupTreeNode = {
+  type: "tabGroup",
+  id: "001",
   activeTabIndex: 2,
-  tabs: [
-    { name: "Tab A", id: "abc123", component: "box" },
-    { name: "Tab B", id: "xyz789", component: "sphere" },
-    { name: "Tab C", id: "a", component: "cone" },
-    { name: "Tab D", id: "b", component: "cylinder" },
+  children: [
+    { type: "tab", id: "abc123", component: "box" },
+    { type: "tab", id: "xyz789", component: "sphere" },
+    { type: "tab", id: "a", component: "cone" },
+    { type: "tab", id: "b", component: "cylinder" },
   ],
 };
 
-export const fourTabs3activeTabIndex: EditorState = {
+export const fourTabs3activeTabIndex: GroupTreeNode = {
+  type: "tabGroup",
+  id: "001",
   activeTabIndex: 3,
-  tabs: [
-    { name: "Tab A", id: "abc123", component: "box" },
-    { name: "Tab B", id: "xyz789", component: "sphere" },
-    { name: "Tab C", id: "a", component: "cone" },
-    { name: "Tab D", id: "b", component: "cylinder" },
+  children: [
+    { type: "tab", id: "abc123", component: "box" },
+    { type: "tab", id: "xyz789", component: "sphere" },
+    { type: "tab", id: "a", component: "cone" },
+    { type: "tab", id: "b", component: "cylinder" },
   ],
 };
 
-export const twoTabGroupsSplitVertically: EditorState = {
-  direction: "col",
-  subGroups: [
+export const twoTabGroupsSplitVertically: GroupTreeNode = {
+  type: "colGroup",
+  id: "001",
+  children: [
     {
+      type: "tabGroup",
+      id: "001",
       activeTabIndex: 0,
-      tabs: [
-        { name: "Tab A", id: "abc123", component: "box" },
-        { name: "Tab B", id: "abc123", component: "box" },
+      children: [
+        { type: "tab", id: "abc123", component: "box" },
+        { type: "tab", id: "abc123", component: "box" },
       ],
     },
     {
+      type: "tabGroup",
+      id: "001",
       activeTabIndex: 0,
-      tabs: [
-        { name: "Tab C", id: "abc123", component: "box" },
-        { name: "Tab D", id: "abc123", component: "box" },
+      children: [
+        { type: "tab", id: "abc123", component: "box" },
+        { type: "tab", id: "abc123", component: "box" },
       ],
     },
   ],
 };
 
-export const complexNestedState: EditorState = {
-  direction: "row",
-  subGroups: [
+export const complexNestedState: GroupTreeNode = {
+  type: "rowGroup",
+  id: "001",
+  children: [
     {
+      type: "tabGroup",
+      id: "001",
       activeTabIndex: 1,
-      tabs: [
-        { name: "Tab A", id: "abc123", component: "box" },
-        { name: "Tab B", id: "xyz789", component: "sphere" },
-        { name: "Tab C", id: "xyz789", component: "cone" },
+      children: [
+        { type: "tab", id: "abc123", component: "box" },
+        { type: "tab", id: "xyz789", component: "sphere" },
+        { type: "tab", id: "xyz789", component: "cone" },
       ],
     },
     {
-      direction: "col",
-      subGroups: [
+      type: "colGroup",
+      id: "001",
+      children: [
         {
+          type: "tabGroup",
+          id: "001",
           activeTabIndex: 1,
-          tabs: [
-            { name: "Tab D", id: "abc123", component: "cylinder" },
-            { name: "Tab E", id: "xyz789", component: "cone" },
+          children: [
+            { type: "tab", id: "abc123", component: "cylinder" },
+            { type: "tab", id: "xyz789", component: "cone" },
           ],
         },
         {
-          direction: "row",
-          subGroups: [
+          type: "rowGroup",
+          id: "002",
+          children: [
             {
+              type: "tabGroup",
+              id: "001",
               activeTabIndex: 0,
-              tabs: [
-                { name: "Tab F", id: "abc123", component: "sphere" },
-                { name: "Tab G", id: "xyz789", component: "cone" },
+              children: [
+                { type: "tab", id: "abc123", component: "sphere" },
+                { type: "tab", id: "xyz789", component: "cone" },
               ],
             },
             {
+              type: "tabGroup",
+              id: "001",
               activeTabIndex: 1,
-              tabs: [
-                { name: "Tab H", id: "abc123", component: "cone" },
-                {
-                  name: "Tab I",
-                  id: "xyz789",
-                  component: "cylinder",
-                },
+              children: [
+                { type: "tab", id: "abc123", component: "cone" },
+                { type: "tab", id: "xyz789", component: "cylinder" },
               ],
             },
           ],
@@ -114,41 +136,53 @@ export const complexNestedState: EditorState = {
   ],
 };
 
-export const fourTabs0activeTabIndexSplitUp: EditorState = {
-  direction: "col",
-  subGroups: [
+export const fourTabs0activeTabIndexSplitUp: GroupTreeNode = {
+  type: "colGroup",
+  id: "001",
+  children: [
     {
+      type: "tabGroup",
+      id: "002",
       activeTabIndex: 0,
-      tabs: [{ name: "Tab A", id: "abc123", component: "box" }],
+      children: [{ type: "tab", id: "abc123", component: "box" }],
     },
     {
+      type: "tabGroup",
+      id: "002",
       activeTabIndex: 0,
-      tabs: [
-        { name: "Tab B", id: "xyz789", component: "sphere" },
-        { name: "Tab C", id: "a", component: "cone" },
-        { name: "Tab D", id: "b", component: "cylinder" },
+      children: [
+        { type: "tab", id: "xyz789", component: "sphere" },
+        { type: "tab", id: "a", component: "cone" },
+        { type: "tab", id: "b", component: "cylinder" },
       ],
     },
   ],
 };
 
-export const twoTabGroupsSplitVerticallySplitUp: EditorState = {
-  direction: "col",
-  subGroups: [
+export const twoTabGroupsSplitVerticallySplitUp: GroupTreeNode = {
+  type: "colGroup",
+  id: "001",
+  children: [
     {
+      type: "tabGroup",
+      id: "001",
       activeTabIndex: 0,
-      tabs: [
-        { name: "Tab A", id: "abc123", component: "box" },
-        { name: "Tab B", id: "abc123", component: "box" },
+      children: [
+        { type: "tab", id: "abc123", component: "box" },
+        { type: "tab", id: "abc123", component: "box" },
       ],
     },
     {
+      type: "tabGroup",
+      id: "001",
       activeTabIndex: 0,
-      tabs: [{ name: "Tab C", id: "abc123", component: "box" }],
+      children: [{ type: "tab", id: "abc123", component: "box" }],
     },
     {
+      type: "tabGroup",
+      id: "001",
       activeTabIndex: 0,
-      tabs: [{ name: "Tab D", id: "abc123", component: "box" }],
+      children: [{ type: "tab", id: "abc123", component: "box" }],
     },
   ],
 };

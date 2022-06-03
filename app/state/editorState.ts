@@ -1,5 +1,6 @@
 import create from "zustand";
 import produce from "immer";
+import { defaultInitialEditorState } from "./defaultState";
 
 export type ViewDropArea = "top" | "bottom" | "left" | "right" | "center";
 
@@ -42,12 +43,7 @@ export type EditorStore = {
 };
 
 export const useEditorStore = create<EditorStore>()((set) => ({
-  editorState: {
-    type: "tabGroup",
-    id: "001",
-    activeTabIndex: 0,
-    children: [{ type: "tab", id: "002", component: "box" }],
-  },
+  editorState: defaultInitialEditorState,
 
   setEditorState: (newState: GroupTreeNode) =>
     set((baseStore) =>
