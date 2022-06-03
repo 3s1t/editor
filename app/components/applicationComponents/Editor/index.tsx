@@ -61,11 +61,7 @@ function DraggableTab({
     },
   });
 
-  const {
-    setTabActive,
-    deleteTab,
-    // moveTabOntoAnotherTab
-  } = useEditorStore2();
+  const { setTabActive, deleteTab, moveTabOntoTab } = useEditorStore2();
 
   // Drop Zone 1
   const [, tabDropRef] = useDrop({
@@ -74,7 +70,7 @@ function DraggableTab({
       console.log(
         `tab was dragged from ${item.fromBreadcrumbs} onto another tab at ${tabBreadcrumbsFromRoot}`
       );
-      // moveTabOntoAnotherTab(item.fromBreadcrumbs, tabBreadcrumbsFromRoot);
+      moveTabOntoTab(item.fromBreadcrumbs, tabBreadcrumbsFromRoot);
       setTabActive(tabBreadcrumbsFromRoot);
     },
   });

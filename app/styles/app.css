@@ -838,6 +838,32 @@ html {
   padding-right: var(--tab-padding, 1rem);
 }
 
+.\!tab {
+  position: relative !important;
+  display: inline-flex !important;
+  cursor: pointer !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+   -ms-user-select: none !important;
+       user-select: none !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  height: 2rem !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  line-height: 2 !important;
+  --tab-padding: 1rem !important;
+  --tw-text-opacity: 0.5 !important;
+  --tab-color: hsla(var(--bc) / var(--tw-text-opacity, 1)) !important;
+  --tab-bg: hsla(var(--b1) / var(--tw-bg-opacity, 1)) !important;
+  --tab-border-color: hsla(var(--b3) / var(--tw-bg-opacity, 1)) !important;
+  color: var(--tab-color) !important;
+  padding-left: var(--tab-padding, 1rem) !important;
+  padding-right: var(--tab-padding, 1rem) !important;
+}
+
 .btn-outline.btn-primary .badge {
   --tw-border-opacity: 1;
   border-color: hsl(var(--p) / var(--tw-border-opacity));
@@ -1384,10 +1410,20 @@ html {
   --tw-text-opacity: 1;
 }
 
+.\!tab:hover {
+  --tw-text-opacity: 1 !important;
+}
+
 .tab.tab-active {
   border-color: hsl(var(--bc) / var(--tw-border-opacity));
   --tw-border-opacity: 1;
   --tw-text-opacity: 1;
+}
+
+.\!tab.tab-active {
+  border-color: hsl(var(--bc) / var(--tw-border-opacity)) !important;
+  --tw-border-opacity: 1 !important;
+  --tw-text-opacity: 1 !important;
 }
 
 .tab:focus {
@@ -1395,14 +1431,29 @@ html {
   outline-offset: 2px;
 }
 
+.\!tab:focus {
+  outline: 2px solid transparent !important;
+  outline-offset: 2px !important;
+}
+
 .tab:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: -3px;
 }
 
+.\!tab:focus-visible {
+  outline: 2px solid currentColor !important;
+  outline-offset: -3px !important;
+}
+
 .tab:focus-visible.tab-lifted {
   border-bottom-right-radius: var(--tab-radius, 0.5rem);
   border-bottom-left-radius: var(--tab-radius, 0.5rem);
+}
+
+.\!tab:focus-visible.tab-lifted {
+  border-bottom-right-radius: var(--tab-radius, 0.5rem) !important;
+  border-bottom-left-radius: var(--tab-radius, 0.5rem) !important;
 }
 
 .tab-bordered {

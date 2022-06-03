@@ -351,7 +351,46 @@ export const useEditorStore2 = create<EditorStore2>()((set) => ({
     ),
 
   moveTabOntoTab: (breadcrumbsFrom, breadcrumbsTo) =>
-    set((baseStore) => produce(baseStore, (draftStore) => {})),
+    set((baseStore) =>
+      produce(baseStore, (draftStore) => {
+        const originParentBreadcrumbs: number[] = breadcrumbsFrom.slice(0, -1);
+        const originTabBreadcrumb: number =
+          breadcrumbsFrom[breadcrumbsFrom.length - 1];
+        const destinationParentBreadcrumbs: number[] = breadcrumbsTo.slice(
+          0,
+          -1
+        );
+        const destinationTabBreadcrumb: number =
+          breadcrumbsTo[breadcrumbsTo.length - 1];
+
+        // get both parent nodes
+        const originParent = getItemAtBreadcrumbs2(
+          draftStore.editorState,
+          originParentBreadcrumbs
+        );
+        const destinationParent = getItemAtBreadcrumbs2(
+          draftStore.editorState,
+          destinationParentBreadcrumbs
+        );
+
+        // make sure both parents are tabGroups
+        if (originParent.type != "tabGroup")
+          throw "Origin parent must be a tab group";
+        if (destinationParent.type != "tabGroup")
+          throw "Destination parent must be a tab group";
+
+        const tab =
+          originParent.children && originParent.children[originTabBreadcrumb];
+
+        if (!tab) throw "Unable to find tab ";
+
+        // remove tab from origin parent
+        originParent.children?.splice(originTabBreadcrumb, 1);
+
+        // add it into the destination parent
+        destinationParent?.children?.splice(destinationTabBreadcrumb, 0, tab);
+      })
+    ),
 
   moveTabOntoView: (breadcrumbsFrom, breadcrumbsTo, viewDropArea) =>
     set((baseStore) => produce(baseStore, (draftStore) => {})),
