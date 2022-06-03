@@ -63,7 +63,7 @@ function DraggableTab({
 
   const {
     setTabActive,
-    // deleteTab,
+    deleteTab,
     // moveTabOntoAnotherTab
   } = useEditorStore2();
 
@@ -91,7 +91,7 @@ function DraggableTab({
         {name}
         <div
           onClick={(e) => {
-            // deleteTab(tabBreadcrumbsFromRoot);
+            deleteTab(tabBreadcrumbsFromRoot);
             e.stopPropagation();
           }}
         >

@@ -284,7 +284,7 @@ export type EditorTreeNode = {
   id: string;
   activeTabIndex?: number; // only for tabGroups
   children?: EditorTreeNode[]; // only for groups
-  component?: "box" | "sphere" | "cone" | "cylinder";
+  component?: "box" | "sphere" | "cone" | "cylinder"; // only for tabs
 };
 
 export type EditorStore2 = {
@@ -315,6 +315,7 @@ export const useEditorStore2 = create<EditorStore2>()((set) => ({
       produce(baseStore, (draftStore) => {
         const parentBreadcrumbs: number[] = breadcrumbs.slice(0, -1);
         const tabBreadcrumb: number = breadcrumbs[breadcrumbs.length - 1];
+
         // get parent node
         const parent = getItemAtBreadcrumbs2(
           draftStore.editorState,
@@ -330,7 +331,24 @@ export const useEditorStore2 = create<EditorStore2>()((set) => ({
     ),
 
   deleteTab: (breadcrumbs) =>
-    set((baseStore) => produce(baseStore, (draftStore) => {})),
+    set((baseStore) =>
+      produce(baseStore, (draftStore) => {
+        const parentBreadcrumbs: number[] = breadcrumbs.slice(0, -1);
+        const tabBreadcrumb: number = breadcrumbs[breadcrumbs.length - 1];
+
+        // get parent node
+        const parent = getItemAtBreadcrumbs2(
+          draftStore.editorState,
+          parentBreadcrumbs
+        );
+
+        // make sure parent is a tabGroup
+        if (parent.type != "tabGroup") throw "Parent must be a tab group";
+
+        // remove tab from children
+        parent.children?.splice(tabBreadcrumb, 1);
+      })
+    ),
 
   moveTabOntoTab: (breadcrumbsFrom, breadcrumbsTo) =>
     set((baseStore) => produce(baseStore, (draftStore) => {})),
