@@ -282,13 +282,13 @@ describe("State management", () => {
             const children = result.current.editorState.children;
 
             // @ts-ignore
-            expect(children[0].component).toBe("sphere");
+            expect(children[0].name).toBe("b");
             // @ts-ignore
-            expect(children[1].component).toBe("cone");
+            expect(children[1].name).toBe("c");
             // @ts-ignore
-            expect(children[2].component).toBe("box");
+            expect(children[2].name).toBe("a");
             // @ts-ignore
-            expect(children[3].component).toBe("cylinder");
+            expect(children[3].name).toBe("d");
           });
         });
         describe.skip("origin tab: first, destination tab: last", () => {});
