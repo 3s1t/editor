@@ -6,13 +6,8 @@ import Editor from "~/components/applicationComponents/Editor";
 import Scene from "~/components/applicationComponents/Scene";
 import CamFollowerScene from "~/components/applicationComponents/CamFollowerScene";
 import Engine from "~/components/modelComponents/Engine";
-import { EditorState } from "~/state";
 import PistonAssembly from "~/components/modelComponents/PistonAssembly";
-import {
-  EditorTreeNode,
-  GroupTreeNode,
-  useEditorStore,
-} from "~/state/editorState";
+import { GroupTreeNode, useEditorStore } from "~/state";
 
 export const loader: LoaderFunction = async () => {
   const oneTabGroupEditorState: GroupTreeNode = {
@@ -40,6 +35,7 @@ export const loader: LoaderFunction = async () => {
         activeTabIndex: 0,
         children: [
           {
+            type: "tab",
             name: "a",
             component: "box",
           },
@@ -50,6 +46,7 @@ export const loader: LoaderFunction = async () => {
         activeTabIndex: 0,
         children: [
           {
+            type: "tab",
             name: "b",
             component: "sphere",
           },

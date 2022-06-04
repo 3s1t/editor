@@ -7,13 +7,11 @@ import Scene from "~/components/applicationComponents/Scene";
 
 import { XIcon } from "../Icon";
 import {
-  EditorTreeNode,
   GroupTreeNode,
   SplitGroupTreeNode,
   TabGroupTreeNode,
-  TabTreeNode,
   useEditorStore,
-} from "~/state/editorState";
+} from "~/state";
 
 const componentMap = {
   box: () => (
