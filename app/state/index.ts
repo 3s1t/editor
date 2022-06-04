@@ -9,10 +9,10 @@ export type { EngineState } from "./engineState";
  */
 export { useEditorStore } from "./editorState";
 export type {
-  TabState,
-  SplitGroupState,
-  TabGroupState,
-  EditorState,
   ViewDropArea,
-  EditorStore,
+  GroupTreeNode,
+  SplitGroupTreeNode,
+  TabGroupTreeNode,
 } from "./editorState";
+
+export { defaultInitialEditorState } from "./defaultState";

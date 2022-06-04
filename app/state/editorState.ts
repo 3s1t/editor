@@ -4,7 +4,7 @@ import { defaultInitialEditorState } from "./defaultState";
 
 export type ViewDropArea = "top" | "bottom" | "left" | "right" | "center";
 
-export type TreeNode = {
+type TreeNode = {
   type: "rowGroup" | "colGroup" | "tabGroup" | "tab";
 };
 
@@ -29,7 +29,7 @@ export type GroupTreeNode = TabGroupTreeNode | SplitGroupTreeNode;
 
 export type EditorTreeNode = TabTreeNode | GroupTreeNode;
 
-export type EditorStore = {
+type EditorStore = {
   editorState: GroupTreeNode;
   setEditorState: (state: GroupTreeNode) => void;
   setTabActive: (breadcrumbs: number[]) => void;

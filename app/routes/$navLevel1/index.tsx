@@ -6,16 +6,11 @@ import Editor from "~/components/applicationComponents/Editor";
 import Scene from "~/components/applicationComponents/Scene";
 import CamFollowerScene from "~/components/applicationComponents/CamFollowerScene";
 import Engine from "~/components/modelComponents/Engine";
-import { EditorState } from "~/state";
 import PistonAssembly from "~/components/modelComponents/PistonAssembly";
-import {
-  EditorTreeNode,
-  GroupTreeNode,
-  useEditorStore,
-} from "~/state/editorState";
+import { GroupTreeNode, useEditorStore } from "~/state";
 
 export const loader: LoaderFunction = async () => {
-  const simpleEditorState2: GroupTreeNode = {
+  const oneTabGroupEditorState: GroupTreeNode = {
     type: "tabGroup",
     activeTabIndex: 0,
     children: [
@@ -32,7 +27,35 @@ export const loader: LoaderFunction = async () => {
     ],
   };
 
-  const complexEditorState2: GroupTreeNode = {
+  const twoTabGroupEditorState: GroupTreeNode = {
+    type: "rowGroup",
+    children: [
+      {
+        type: "tabGroup",
+        activeTabIndex: 0,
+        children: [
+          {
+            type: "tab",
+            name: "a",
+            component: "box",
+          },
+        ],
+      },
+      {
+        type: "tabGroup",
+        activeTabIndex: 0,
+        children: [
+          {
+            type: "tab",
+            name: "b",
+            component: "sphere",
+          },
+        ],
+      },
+    ],
+  };
+
+  const complexEditorState: GroupTreeNode = {
     type: "rowGroup",
     children: [
       {
@@ -112,7 +135,7 @@ export const loader: LoaderFunction = async () => {
     ],
   };
 
-  return json(complexEditorState2);
+  return json(twoTabGroupEditorState);
 };
 
 export default function () {
