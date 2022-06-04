@@ -3,17 +3,17 @@ import { GroupTreeNode } from "../editorState";
 export const oneTabState: GroupTreeNode = {
   type: "tabGroup",
   activeTabIndex: 0,
-  children: [{ type: "tab", component: "box" }],
+  children: [{ type: "tab", name: "a", component: "box" }],
 };
 
 export const fourTabs0activeTabIndex: GroupTreeNode = {
   type: "tabGroup",
   activeTabIndex: 0,
   children: [
-    { type: "tab", component: "box" },
-    { type: "tab", component: "sphere" },
-    { type: "tab", component: "cone" },
-    { type: "tab", component: "cylinder" },
+    { type: "tab", name: "a", component: "box" },
+    { type: "tab", name: "b", component: "sphere" },
+    { type: "tab", name: "c", component: "cone" },
+    { type: "tab", name: "d", component: "cylinder" },
   ],
 };
 
@@ -21,10 +21,10 @@ export const fourTabs1activeTabIndex: GroupTreeNode = {
   type: "tabGroup",
   activeTabIndex: 1,
   children: [
-    { type: "tab", component: "box" },
-    { type: "tab", component: "sphere" },
-    { type: "tab", component: "cone" },
-    { type: "tab", component: "cylinder" },
+    { type: "tab", name: "a", component: "box" },
+    { type: "tab", name: "b", component: "sphere" },
+    { type: "tab", name: "c", component: "cone" },
+    { type: "tab", name: "d", component: "cylinder" },
   ],
 };
 
@@ -32,10 +32,10 @@ export const fourTabs2activeTabIndex: GroupTreeNode = {
   type: "tabGroup",
   activeTabIndex: 2,
   children: [
-    { type: "tab", component: "box" },
-    { type: "tab", component: "sphere" },
-    { type: "tab", component: "cone" },
-    { type: "tab", component: "cylinder" },
+    { type: "tab", name: "a", component: "box" },
+    { type: "tab", name: "b", component: "sphere" },
+    { type: "tab", name: "c", component: "cone" },
+    { type: "tab", name: "d", component: "cylinder" },
   ],
 };
 
@@ -43,10 +43,10 @@ export const fourTabs3activeTabIndex: GroupTreeNode = {
   type: "tabGroup",
   activeTabIndex: 3,
   children: [
-    { type: "tab", component: "box" },
-    { type: "tab", component: "sphere" },
-    { type: "tab", component: "cone" },
-    { type: "tab", component: "cylinder" },
+    { type: "tab", name: "a", component: "box" },
+    { type: "tab", name: "b", component: "sphere" },
+    { type: "tab", name: "c", component: "cone" },
+    { type: "tab", name: "d", component: "cylinder" },
   ],
 };
 
@@ -58,16 +58,16 @@ export const twoTabGroupsSplitVertically: GroupTreeNode = {
 
       activeTabIndex: 0,
       children: [
-        { type: "tab", component: "box" },
-        { type: "tab", component: "sphere" },
+        { type: "tab", name: "a", component: "box" },
+        { type: "tab", name: "b", component: "sphere" },
       ],
     },
     {
       type: "tabGroup",
       activeTabIndex: 0,
       children: [
-        { type: "tab", component: "cone" },
-        { type: "tab", component: "cylinder" },
+        { type: "tab", name: "a", component: "cone" },
+        { type: "tab", name: "b", component: "cylinder" },
       ],
     },
   ],
@@ -81,19 +81,19 @@ export const threeTabGroupsSplitVertically: GroupTreeNode = {
 
       activeTabIndex: 0,
       children: [
-        { type: "tab", component: "box" },
-        { type: "tab", component: "sphere" },
+        { type: "tab", name: "a", component: "box" },
+        { type: "tab", name: "b", component: "sphere" },
       ],
     },
     {
       type: "tabGroup",
       activeTabIndex: 0,
-      children: [{ type: "tab", component: "cone" }],
+      children: [{ type: "tab", name: "b", component: "cone" }],
     },
     {
       type: "tabGroup",
       activeTabIndex: 0,
-      children: [{ type: "tab", component: "cylinder" }],
+      children: [{ type: "tab", name: "c", component: "cylinder" }],
     },
   ],
 };
@@ -105,9 +105,9 @@ export const complexNestedState: GroupTreeNode = {
       type: "tabGroup",
       activeTabIndex: 1,
       children: [
-        { type: "tab", component: "box" },
-        { type: "tab", component: "sphere" },
-        { type: "tab", component: "cone" },
+        { type: "tab", name: "a", component: "box" },
+        { type: "tab", name: "b", component: "sphere" },
+        { type: "tab", name: "c", component: "cone" },
       ],
     },
     {
@@ -117,8 +117,8 @@ export const complexNestedState: GroupTreeNode = {
           type: "tabGroup",
           activeTabIndex: 1,
           children: [
-            { type: "tab", component: "cylinder" },
-            { type: "tab", component: "cone" },
+            { type: "tab", name: "d", component: "cylinder" },
+            { type: "tab", name: "e", component: "cone" },
           ],
         },
         {
@@ -129,16 +129,16 @@ export const complexNestedState: GroupTreeNode = {
 
               activeTabIndex: 0,
               children: [
-                { type: "tab", component: "sphere" },
-                { type: "tab", component: "cone" },
+                { type: "tab", name: "e", component: "sphere" },
+                { type: "tab", name: "f", component: "cone" },
               ],
             },
             {
               type: "tabGroup",
               activeTabIndex: 1,
               children: [
-                { type: "tab", component: "cone" },
-                { type: "tab", component: "cylinder" },
+                { type: "tab", name: "g", component: "cone" },
+                { type: "tab", name: "h", component: "cylinder" },
               ],
             },
           ],
@@ -154,15 +154,15 @@ export const fourTabs0activeTabIndexSplitUp: GroupTreeNode = {
     {
       type: "tabGroup",
       activeTabIndex: 0,
-      children: [{ type: "tab", component: "box" }],
+      children: [{ type: "tab", name: "i", component: "box" }],
     },
     {
       type: "tabGroup",
       activeTabIndex: 0,
       children: [
-        { type: "tab", component: "sphere" },
-        { type: "tab", component: "cone" },
-        { type: "tab", component: "cylinder" },
+        { type: "tab", name: "j", component: "sphere" },
+        { type: "tab", name: "k", component: "cone" },
+        { type: "tab", name: "l", component: "cylinder" },
       ],
     },
   ],
@@ -175,19 +175,19 @@ export const twoTabGroupsSplitVerticallySplitUp: GroupTreeNode = {
       type: "tabGroup",
       activeTabIndex: 0,
       children: [
-        { type: "tab", component: "box" },
-        { type: "tab", component: "box" },
+        { type: "tab", name: "a", component: "box" },
+        { type: "tab", name: "b", component: "box" },
       ],
     },
     {
       type: "tabGroup",
       activeTabIndex: 0,
-      children: [{ type: "tab", component: "box" }],
+      children: [{ type: "tab", name: "c", component: "box" }],
     },
     {
       type: "tabGroup",
       activeTabIndex: 0,
-      children: [{ type: "tab", component: "box" }],
+      children: [{ type: "tab", name: "d", component: "box" }],
     },
   ],
 };

@@ -21,10 +21,12 @@ export const loader: LoaderFunction = async () => {
     children: [
       {
         type: "tab",
+        name: "a",
         component: "box",
       },
       {
         type: "tab",
+        name: "b",
         component: "sphere",
       },
     ],
@@ -39,10 +41,12 @@ export const loader: LoaderFunction = async () => {
         children: [
           {
             type: "tab",
+            name: "c",
             component: "box",
           },
           {
             type: "tab",
+            name: "d",
             component: "sphere",
           },
         ],
@@ -56,10 +60,12 @@ export const loader: LoaderFunction = async () => {
             children: [
               {
                 type: "tab",
+                name: "e",
                 component: "cylinder",
               },
               {
                 type: "tab",
+                name: "f",
                 component: "sphere",
               },
             ],
@@ -73,10 +79,12 @@ export const loader: LoaderFunction = async () => {
                 children: [
                   {
                     type: "tab",
+                    name: "g",
                     component: "cone",
                   },
                   {
                     type: "tab",
+                    name: "h",
                     component: "sphere",
                   },
                 ],
@@ -87,10 +95,12 @@ export const loader: LoaderFunction = async () => {
                 children: [
                   {
                     type: "tab",
+                    name: "i",
                     component: "sphere",
                   },
                   {
                     type: "tab",
+                    name: "j",
                     component: "sphere",
                   },
                 ],

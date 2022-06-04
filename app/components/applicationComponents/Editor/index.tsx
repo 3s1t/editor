@@ -220,8 +220,8 @@ function TabGroup({
           return (
             <DraggableTab
               key={i}
-              id={tab.id}
-              name={tab.id}
+              id={tab.name}
+              name={tab.name}
               active={activeTabIndex == i}
               tabBreadcrumbsFromRoot={tabBreadcrumbsFromRoot}
             />

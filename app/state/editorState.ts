@@ -11,6 +11,7 @@ export type TreeNode = {
 export interface TabTreeNode extends TreeNode {
   type: "tab";
   component: "box" | "sphere" | "cone" | "cylinder";
+  name: string;
 }
 
 export interface TabGroupTreeNode extends TreeNode {
