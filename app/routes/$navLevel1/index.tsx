@@ -6,69 +6,118 @@ import Editor from "~/components/applicationComponents/Editor";
 import Scene from "~/components/applicationComponents/Scene";
 import CamFollowerScene from "~/components/applicationComponents/CamFollowerScene";
 import Engine from "~/components/modelComponents/Engine";
-import { EditorState, useEditorStore } from "~/state";
+import { EditorState } from "~/state";
 import PistonAssembly from "~/components/modelComponents/PistonAssembly";
+import {
+  EditorTreeNode,
+  GroupTreeNode,
+  useEditorStore,
+} from "~/state/editorState";
 
 export const loader: LoaderFunction = async () => {
-  const complexEditorState: EditorState = {
-    direction: "row",
-    subGroups: [
-      {
-        activeTabIndex: 1,
-        tabs: [
-          { name: "Tab A", id: "abc123", component: "box" },
-          { name: "Tab B", id: "xyz789", component: "sphere" },
-          { name: "Tab C", id: "xyz789", component: "cone" },
-        ],
-      },
-      {
-        direction: "col",
-        subGroups: [
-          {
-            activeTabIndex: 1,
-            tabs: [
-              { name: "Tab D", id: "abc123", component: "cylinder" },
-              { name: "Tab E", id: "xyz789", component: "cone" },
-            ],
-          },
-          {
-            direction: "row",
-            subGroups: [
-              {
-                activeTabIndex: 0,
-                tabs: [
-                  { name: "Tab F", id: "abc123", component: "sphere" },
-                  { name: "Tab G", id: "xyz789", component: "cone" },
-                ],
-              },
-              {
-                activeTabIndex: 1,
-                tabs: [
-                  { name: "Tab H", id: "abc123", component: "cone" },
-                  { name: "Tab I", id: "xyz789", component: "cylinder" },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  };
-
-  const simpleEditorState: EditorState = {
+  const simpleEditorState2: GroupTreeNode = {
+    type: "tabGroup",
     activeTabIndex: 0,
-    tabs: [
-      { name: "Tab A", id: "abc123", component: "box" },
-      { name: "Tab B", id: "xyz123", component: "sphere" },
+    children: [
+      {
+        type: "tab",
+        name: "a",
+        component: "box",
+      },
+      {
+        type: "tab",
+        name: "b",
+        component: "sphere",
+      },
     ],
   };
 
-  return json(complexEditorState);
+  const complexEditorState2: GroupTreeNode = {
+    type: "rowGroup",
+    children: [
+      {
+        type: "tabGroup",
+        activeTabIndex: 0,
+        children: [
+          {
+            type: "tab",
+            name: "c",
+            component: "box",
+          },
+          {
+            type: "tab",
+            name: "d",
+            component: "sphere",
+          },
+        ],
+      },
+      {
+        type: "colGroup",
+        children: [
+          {
+            type: "tabGroup",
+            activeTabIndex: 1,
+            children: [
+              {
+                type: "tab",
+                name: "e",
+                component: "cylinder",
+              },
+              {
+                type: "tab",
+                name: "f",
+                component: "sphere",
+              },
+            ],
+          },
+          {
+            type: "rowGroup",
+            children: [
+              {
+                type: "tabGroup",
+                activeTabIndex: 0,
+                children: [
+                  {
+                    type: "tab",
+                    name: "g",
+                    component: "cone",
+                  },
+                  {
+                    type: "tab",
+                    name: "h",
+                    component: "sphere",
+                  },
+                ],
+              },
+              {
+                type: "tabGroup",
+                activeTabIndex: 0,
+                children: [
+                  {
+                    type: "tab",
+                    name: "i",
+                    component: "sphere",
+                  },
+                  {
+                    type: "tab",
+                    name: "j",
+                    component: "sphere",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+
+  return json(complexEditorState2);
 };
 
 export default function () {
   const { navLevel1 } = useParams();
-  const backendEditorState = useLoaderData<EditorState>();
+  const backendEditorState = useLoaderData<GroupTreeNode>();
   const { editorState, setEditorState } = useEditorStore();
   useEffect(() => {
     setEditorState(backendEditorState); // TODO: look into how to pass in state to initialization (prev line) instead of setting it here
@@ -78,7 +127,7 @@ export default function () {
 
   return (
     <div className="w-full h-full">
-      {navLevel1 == "model" && <Editor state={editorState} />}
+      {navLevel1 == "model" && <Editor tree={editorState} />}
       {navLevel1 == "code" && (
         <Scene>
           <Engine navigate={navigate} />

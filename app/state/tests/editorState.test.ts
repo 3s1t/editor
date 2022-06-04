@@ -15,6 +15,7 @@ import {
   twoTabGroupsSplitVertically,
   fourTabs0activeTabIndexSplitUp,
   twoTabGroupsSplitVerticallySplitUp,
+  threeTabGroupsSplitVertically,
 } from "./testData";
 
 describe("State management", () => {
@@ -69,7 +70,7 @@ describe("State management", () => {
 
           expect(
             // @ts-ignore
-            result.current.editorState.subGroups[1].subGroups[1].subGroups[1]
+            result.current.editorState.children[1].children[1].children[1]
               .activeTabIndex
           ).toBe(1);
 
@@ -79,7 +80,7 @@ describe("State management", () => {
 
           expect(
             // @ts-ignore
-            result.current.editorState.subGroups[1].subGroups[1].subGroups[1]
+            result.current.editorState.children[1].children[1].children[1]
               .activeTabIndex
           ).toBe(0);
         });
@@ -100,7 +101,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(1);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(4);
+              expect(result.current.editorState.children.length).toBe(4);
 
               act(() => {
                 result.current.deleteTab([0]);
@@ -109,7 +110,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(0);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(3);
+              expect(result.current.editorState.children.length).toBe(3);
             });
           });
 
@@ -124,7 +125,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(0);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(4);
+              expect(result.current.editorState.children.length).toBe(4);
 
               act(() => {
                 result.current.deleteTab([0]);
@@ -134,7 +135,7 @@ describe("State management", () => {
               expect(result.current.editorState.activeTabIndex).toBe(0);
 
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(3);
+              expect(result.current.editorState.children.length).toBe(3);
             });
           });
         });
@@ -152,7 +153,7 @@ describe("State management", () => {
                 // @ts-ignore
                 expect(result.current.editorState.activeTabIndex).toBe(2);
                 // @ts-ignore
-                expect(result.current.editorState.tabs.length).toBe(4);
+                expect(result.current.editorState.children.length).toBe(4);
 
                 act(() => {
                   result.current.deleteTab([1]);
@@ -161,7 +162,7 @@ describe("State management", () => {
                 // @ts-ignore
                 expect(result.current.editorState.activeTabIndex).toBe(1);
                 // @ts-ignore
-                expect(result.current.editorState.tabs.length).toBe(3);
+                expect(result.current.editorState.children.length).toBe(3);
               });
             });
 
@@ -176,7 +177,7 @@ describe("State management", () => {
                 // @ts-ignore
                 expect(result.current.editorState.activeTabIndex).toBe(2);
                 // @ts-ignore
-                expect(result.current.editorState.tabs.length).toBe(4);
+                expect(result.current.editorState.children.length).toBe(4);
 
                 act(() => {
                   result.current.deleteTab([3]);
@@ -185,7 +186,7 @@ describe("State management", () => {
                 // @ts-ignore
                 expect(result.current.editorState.activeTabIndex).toBe(2);
                 // @ts-ignore
-                expect(result.current.editorState.tabs.length).toBe(3);
+                expect(result.current.editorState.children.length).toBe(3);
               });
             });
           });
@@ -201,7 +202,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(2);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(4);
+              expect(result.current.editorState.children.length).toBe(4);
 
               act(() => {
                 result.current.deleteTab([2]);
@@ -210,7 +211,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(2);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(3);
+              expect(result.current.editorState.children.length).toBe(3);
             });
           });
         });
@@ -227,7 +228,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(1);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(4);
+              expect(result.current.editorState.children.length).toBe(4);
 
               act(() => {
                 result.current.deleteTab([3]);
@@ -236,7 +237,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(1);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(3);
+              expect(result.current.editorState.children.length).toBe(3);
             });
           });
 
@@ -251,7 +252,7 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(3);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(4);
+              expect(result.current.editorState.children.length).toBe(4);
 
               act(() => {
                 result.current.deleteTab([3]);
@@ -260,14 +261,14 @@ describe("State management", () => {
               // @ts-ignore
               expect(result.current.editorState.activeTabIndex).toBe(2);
               // @ts-ignore
-              expect(result.current.editorState.tabs.length).toBe(3);
+              expect(result.current.editorState.children.length).toBe(3);
             });
           });
         });
       });
     });
 
-    describe("moveTabOntoAnotherTab", () => {
+    describe("moveTabOntoTab", () => {
       describe("within the same 4-tab group", () => {
         describe("originIndex: 0, destinationIndex: 2", () => {
           it("rearranges tabs", () => {
@@ -275,17 +276,19 @@ describe("State management", () => {
 
             act(() => {
               result.current.setEditorState(fourTabs1activeTabIndex);
-              result.current.moveTabOntoAnotherTab([0], [2]);
+              result.current.moveTabOntoTab([0], [2]);
             });
 
+            const children = result.current.editorState.children;
+
             // @ts-ignore
-            expect(result.current.editorState.tabs[0].name).toBe("Tab B");
+            expect(children[0].name).toBe("b");
             // @ts-ignore
-            expect(result.current.editorState.tabs[1].name).toBe("Tab C");
+            expect(children[1].name).toBe("c");
             // @ts-ignore
-            expect(result.current.editorState.tabs[2].name).toBe("Tab A");
+            expect(children[2].name).toBe("a");
             // @ts-ignore
-            expect(result.current.editorState.tabs[3].name).toBe("Tab D");
+            expect(children[3].name).toBe("d");
           });
         });
         describe.skip("origin tab: first, destination tab: last", () => {});
@@ -353,9 +356,9 @@ describe("State management", () => {
               );
             });
           });
-          describe.skip("nested", () => {
+          describe("nested", () => {
             describe("current tab group is a column", () => {
-              it.only("adds a sibling to the group with the new group above the current", () => {
+              it("adds a sibling to the group with the new group above the current", () => {
                 const { result } = renderHook(() => useEditorStore());
 
                 act(() => {
@@ -363,7 +366,7 @@ describe("State management", () => {
                   result.current.moveTabOntoView([1, 0], [1], "top");
                 });
                 expect(result.current.editorState).toEqual(
-                  twoTabGroupsSplitVerticallySplitUp
+                  threeTabGroupsSplitVertically
                 );
               });
             });

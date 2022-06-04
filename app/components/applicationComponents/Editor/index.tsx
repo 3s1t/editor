@@ -5,18 +5,15 @@ import { useDrop, useDrag } from "react-dnd";
 
 import Scene from "~/components/applicationComponents/Scene";
 
-import {
-  EditorState,
-  SplitGroupState,
-  useEditorStore,
-  TabState,
-} from "~/state";
 import { XIcon } from "../Icon";
-
-type TabGroupProps = {
-  breadcrumbsFromRoot?: number[];
-  state: { activeTabIndex?: number; tabs: TabState[] };
-};
+import {
+  EditorTreeNode,
+  GroupTreeNode,
+  SplitGroupTreeNode,
+  TabGroupTreeNode,
+  TabTreeNode,
+  useEditorStore,
+} from "~/state/editorState";
 
 const componentMap = {
   box: () => (
@@ -71,7 +68,7 @@ function DraggableTab({
     },
   });
 
-  const { setTabActive, deleteTab, moveTabOntoAnotherTab } = useEditorStore();
+  const { setTabActive, deleteTab, moveTabOntoTab } = useEditorStore();
 
   // Drop Zone 1
   const [, tabDropRef] = useDrop({
@@ -80,7 +77,7 @@ function DraggableTab({
       console.log(
         `tab was dragged from ${item.fromBreadcrumbs} onto another tab at ${tabBreadcrumbsFromRoot}`
       );
-      moveTabOntoAnotherTab(item.fromBreadcrumbs, tabBreadcrumbsFromRoot);
+      moveTabOntoTab(item.fromBreadcrumbs, tabBreadcrumbsFromRoot);
       setTabActive(tabBreadcrumbsFromRoot);
     },
   });
@@ -108,16 +105,23 @@ function DraggableTab({
   );
 }
 
+type TabGroupProps = {
+  breadcrumbsFromRoot?: number[];
+  tree: TabGroupTreeNode;
+};
+
 function TabGroup({
-  state: { tabs = [], activeTabIndex = 0 },
+  tree: { children = [], activeTabIndex = 0 },
   breadcrumbsFromRoot = [],
 }: TabGroupProps) {
   const { moveTabOntoView } = useEditorStore();
 
   // determine which model is shown in the viewer
   let ActiveComponent;
-  if (tabs[activeTabIndex] && componentMap[tabs[activeTabIndex].component]) {
-    ActiveComponent = componentMap[tabs[activeTabIndex].component];
+  if (children[activeTabIndex] && children[activeTabIndex].component) {
+    const componentType = children[activeTabIndex].component;
+    if (!componentType) throw "component type invalid";
+    ActiveComponent = componentMap[componentType];
   } else {
     ActiveComponent = () => (
       <Html>
@@ -210,13 +214,13 @@ function TabGroup({
   return (
     <div className="flex flex-col w-full h-full">
       <div className="flex flex-row tabs">
-        {tabs.map((tab, i) => {
+        {children.map((tab, i) => {
           const tabBreadcrumbsFromRoot = [...breadcrumbsFromRoot, i];
 
           return (
             <DraggableTab
               key={i}
-              id={tab.id}
+              id={tab.name}
               name={tab.name}
               active={activeTabIndex == i}
               tabBreadcrumbsFromRoot={tabBreadcrumbsFromRoot}
@@ -299,49 +303,49 @@ function TabGroup({
 
 type SplitGroupProps = {
   breadcrumbsFromRoot?: number[];
-  state: SplitGroupState;
+  tree: SplitGroupTreeNode;
 };
 
 function SplitGroup({
-  state: { subGroups, direction },
+  tree: { children, type },
   breadcrumbsFromRoot = [],
 }: SplitGroupProps) {
   return (
     <div
       className={`flex ${
-        direction == "row" ? "flex-row" : "flex-col"
+        type == "rowGroup" ? "flex-row" : "flex-col"
       } w-full h-full`}
     >
-      {subGroups.map((subGroupState, i) => {
-        const props = {
-          key: i,
-          state: subGroupState,
-          breadcrumbsFromRoot: [...breadcrumbsFromRoot, i],
-        };
-        return <Editor {...props} />;
-      })}
+      {children &&
+        children.map((subGroupState, i) => {
+          if (!("children" in subGroupState))
+            throw "Child of SplitGroup must be a Group";
+          const props = {
+            key: i,
+            tree: subGroupState,
+            breadcrumbsFromRoot: [...breadcrumbsFromRoot, i],
+          };
+          return <Editor {...props} />;
+        })}
     </div>
   );
 }
+
 type EditorProps = {
   breadcrumbsFromRoot?: number[];
-  state: EditorState;
+  tree: GroupTreeNode;
 };
 
 export default function Editor({
   breadcrumbsFromRoot = [],
-  state,
+  tree,
 }: EditorProps) {
   return (
     <div className="w-full h-full border border-[#243c5a]">
-      {state ? (
-        "direction" in state ? (
-          <SplitGroup state={state} breadcrumbsFromRoot={breadcrumbsFromRoot} />
-        ) : (
-          <TabGroup state={state} breadcrumbsFromRoot={breadcrumbsFromRoot} />
-        )
+      {tree.type == "tabGroup" ? (
+        <TabGroup tree={tree} breadcrumbsFromRoot={breadcrumbsFromRoot} />
       ) : (
-        <div>empty</div>
+        <SplitGroup tree={tree} breadcrumbsFromRoot={breadcrumbsFromRoot} />
       )}
     </div>
   );
