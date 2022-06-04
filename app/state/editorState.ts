@@ -6,7 +6,6 @@ export type ViewDropArea = "top" | "bottom" | "left" | "right" | "center";
 
 export type TreeNode = {
   type: "rowGroup" | "colGroup" | "tabGroup" | "tab";
-  id: string;
 };
 
 export interface TabTreeNode extends TreeNode {

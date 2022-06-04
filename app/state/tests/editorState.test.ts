@@ -311,7 +311,7 @@ describe("State management", () => {
       describe.skip("in a different group", () => {});
     });
 
-    describe.skip("moveTabOntoView", () => {
+    describe("moveTabOntoView", () => {
       describe("within the same group", () => {
         describe("center", () => {
           describe("simple", () => {
