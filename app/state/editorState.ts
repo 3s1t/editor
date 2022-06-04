@@ -183,6 +183,7 @@ export const useEditorStore = create<EditorStore>()((set) => ({
         switch (viewDropArea) {
           case "center": {
             destinationTabGroup.children.push(tab); // push tab to end of destinationTabGroup
+            break;
           }
           case "top": {
             // turn destinationTabGroup into a colGroup w/ new tab on top and destinationTabGroup on bottom
@@ -226,12 +227,139 @@ export const useEditorStore = create<EditorStore>()((set) => ({
                 return;
               }
             }
+            break;
           }
           case "bottom": {
+            // turn destinationTabGroup into a colGroup w/ new tab on bottom and destinationTabGroup on top
+            const destinationTabGroupChildren = destinationTabGroup.children;
+            const colGroup: SplitGroupTreeNode = {
+              type: "colGroup",
+              children: [
+                {
+                  type: "tabGroup",
+                  activeTabIndex: destinationTabGroup.activeTabIndex,
+                  children: [...destinationTabGroupChildren],
+                },
+                {
+                  type: "tabGroup",
+                  activeTabIndex: 0,
+                  children: [tab],
+                },
+              ],
+            };
+
+            if (destinationTabGroup == draftStore.editorState) {
+              draftStore.editorState = colGroup;
+            } else {
+              const parentOfDestinationTabGroup = getItemAtBreadcrumbs(
+                draftStore.editorState,
+                breadcrumbsTo.slice(0, -1)
+              );
+              if (parentOfDestinationTabGroup.type == "colGroup") {
+                parentOfDestinationTabGroup.children.splice(
+                  destinationTabGroupIndex,
+                  1,
+                  ...colGroup.children
+                );
+              } else if (parentOfDestinationTabGroup.type == "rowGroup") {
+                parentOfDestinationTabGroup.children.splice(
+                  destinationTabGroupIndex,
+                  1,
+                  colGroup
+                );
+              } else {
+                return;
+              }
+            }
+            break;
           }
           case "left": {
+            // turn destinationTabGroup into a rowGroup w/ new tab on left and destinationTabGroup on right
+            const destinationTabGroupChildren = destinationTabGroup.children;
+            const rowGroup: SplitGroupTreeNode = {
+              type: "rowGroup",
+              children: [
+                {
+                  type: "tabGroup",
+                  activeTabIndex: 0,
+                  children: [tab],
+                },
+                {
+                  type: "tabGroup",
+                  activeTabIndex: destinationTabGroup.activeTabIndex,
+                  children: [...destinationTabGroupChildren],
+                },
+              ],
+            };
+
+            if (destinationTabGroup == draftStore.editorState) {
+              draftStore.editorState = rowGroup;
+            } else {
+              const parentOfDestinationTabGroup = getItemAtBreadcrumbs(
+                draftStore.editorState,
+                breadcrumbsTo.slice(0, -1)
+              );
+              if (parentOfDestinationTabGroup.type == "rowGroup") {
+                parentOfDestinationTabGroup.children.splice(
+                  destinationTabGroupIndex,
+                  1,
+                  ...rowGroup.children
+                );
+              } else if (parentOfDestinationTabGroup.type == "colGroup") {
+                parentOfDestinationTabGroup.children.splice(
+                  destinationTabGroupIndex,
+                  1,
+                  rowGroup
+                );
+              } else {
+                return;
+              }
+            }
+            break;
           }
           case "right": {
+            // turn destinationTabGroup into a rowGroup w/ new tab on right and destinationTabGroup on left
+            const destinationTabGroupChildren = destinationTabGroup.children;
+            const rowGroup: SplitGroupTreeNode = {
+              type: "rowGroup",
+              children: [
+                {
+                  type: "tabGroup",
+                  activeTabIndex: destinationTabGroup.activeTabIndex,
+                  children: [...destinationTabGroupChildren],
+                },
+                {
+                  type: "tabGroup",
+                  activeTabIndex: 0,
+                  children: [tab],
+                },
+              ],
+            };
+
+            if (destinationTabGroup == draftStore.editorState) {
+              draftStore.editorState = rowGroup;
+            } else {
+              const parentOfDestinationTabGroup = getItemAtBreadcrumbs(
+                draftStore.editorState,
+                breadcrumbsTo.slice(0, -1)
+              );
+              if (parentOfDestinationTabGroup.type == "rowGroup") {
+                parentOfDestinationTabGroup.children.splice(
+                  destinationTabGroupIndex,
+                  1,
+                  ...rowGroup.children
+                );
+              } else if (parentOfDestinationTabGroup.type == "colGroup") {
+                parentOfDestinationTabGroup.children.splice(
+                  destinationTabGroupIndex,
+                  1,
+                  rowGroup
+                );
+              } else {
+                return;
+              }
+            }
+            break;
           }
         }
       })
