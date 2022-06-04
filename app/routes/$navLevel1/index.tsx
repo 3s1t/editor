@@ -15,7 +15,7 @@ import {
 } from "~/state/editorState";
 
 export const loader: LoaderFunction = async () => {
-  const simpleEditorState2: GroupTreeNode = {
+  const oneTabGroupEditorState: GroupTreeNode = {
     type: "tabGroup",
     activeTabIndex: 0,
     children: [
@@ -32,7 +32,33 @@ export const loader: LoaderFunction = async () => {
     ],
   };
 
-  const complexEditorState2: GroupTreeNode = {
+  const twoTabGroupEditorState: GroupTreeNode = {
+    type: "rowGroup",
+    children: [
+      {
+        type: "tabGroup",
+        activeTabIndex: 0,
+        children: [
+          {
+            name: "a",
+            component: "box",
+          },
+        ],
+      },
+      {
+        type: "tabGroup",
+        activeTabIndex: 0,
+        children: [
+          {
+            name: "b",
+            component: "sphere",
+          },
+        ],
+      },
+    ],
+  };
+
+  const complexEditorState: GroupTreeNode = {
     type: "rowGroup",
     children: [
       {
@@ -112,7 +138,7 @@ export const loader: LoaderFunction = async () => {
     ],
   };
 
-  return json(complexEditorState2);
+  return json(twoTabGroupEditorState);
 };
 
 export default function () {
