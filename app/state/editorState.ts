@@ -143,7 +143,98 @@ export const useEditorStore = create<EditorStore>()((set) => ({
     ),
 
   moveTabOntoView: (breadcrumbsFrom, breadcrumbsTo, viewDropArea) =>
-    set((baseStore) => produce(baseStore, (draftStore) => {})),
+    set((baseStore) =>
+      produce(baseStore, (draftStore) => {
+        // get items
+        const tab = getItemAtBreadcrumbs(
+          draftStore.editorState,
+          breadcrumbsFrom
+        );
+        const originTabGroup = getItemAtBreadcrumbs(
+          draftStore.editorState,
+          breadcrumbsFrom.slice(0, -1)
+        );
+        const destinationTabGroup = getItemAtBreadcrumbs(
+          draftStore.editorState,
+          breadcrumbsTo
+        );
+
+        // checks
+        if (
+          tab.type != "tab" ||
+          originTabGroup.type != "tabGroup" ||
+          destinationTabGroup.type != "tabGroup"
+        )
+          throw "Invalid breadcrumbs";
+
+        // get useful indices
+        const originTabIndex: number =
+          breadcrumbsFrom[breadcrumbsFrom.length - 1];
+        const destinationTabGroupIndex: number =
+          breadcrumbsTo[breadcrumbsTo.length - 1];
+
+        // special case - when a tab is dropped in center of same tab group, don't do anything
+        if (viewDropArea == "center" && originTabGroup == destinationTabGroup)
+          return;
+
+        // manipulate state
+        originTabGroup.children.splice(originTabIndex, 1); // remove tab from originTabGroup
+        switch (viewDropArea) {
+          case "center": {
+            destinationTabGroup.children.push(tab); // push tab to end of destinationTabGroup
+          }
+          case "top": {
+            // turn destinationTabGroup into a colGroup w/ new tab on top and destinationTabGroup on bottom
+            const destinationTabGroupChildren = destinationTabGroup.children;
+            const colGroup: SplitGroupTreeNode = {
+              type: "colGroup",
+              children: [
+                {
+                  type: "tabGroup",
+                  activeTabIndex: 0,
+                  children: [tab],
+                },
+                {
+                  type: "tabGroup",
+                  activeTabIndex: destinationTabGroup.activeTabIndex,
+                  children: [...destinationTabGroupChildren],
+                },
+              ],
+            };
+
+            if (destinationTabGroup == draftStore.editorState) {
+              draftStore.editorState = colGroup;
+            } else {
+              const parentOfDestinationTabGroup = getItemAtBreadcrumbs(
+                draftStore.editorState,
+                breadcrumbsTo.slice(0, -1)
+              );
+              if (parentOfDestinationTabGroup.type == "colGroup") {
+                parentOfDestinationTabGroup.children.splice(
+                  destinationTabGroupIndex,
+                  1,
+                  ...colGroup.children
+                );
+              } else if (parentOfDestinationTabGroup.type == "rowGroup") {
+                parentOfDestinationTabGroup.children.splice(
+                  destinationTabGroupIndex,
+                  1,
+                  colGroup
+                );
+              } else {
+                return;
+              }
+            }
+          }
+          case "bottom": {
+          }
+          case "left": {
+          }
+          case "right": {
+          }
+        }
+      })
+    ),
 }));
 
 function getItemAtBreadcrumbs(

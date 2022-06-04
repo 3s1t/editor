@@ -15,6 +15,7 @@ import {
   twoTabGroupsSplitVertically,
   fourTabs0activeTabIndexSplitUp,
   twoTabGroupsSplitVerticallySplitUp,
+  threeTabGroupsSplitVertically,
 } from "./testData";
 
 describe("State management", () => {
@@ -281,13 +282,13 @@ describe("State management", () => {
             const children = result.current.editorState.children;
 
             // @ts-ignore
-            expect(children[0].id).toBe("002");
+            expect(children[0].component).toBe("sphere");
             // @ts-ignore
-            expect(children[1].id).toBe("003");
+            expect(children[1].component).toBe("cone");
             // @ts-ignore
-            expect(children[2].id).toBe("001");
+            expect(children[2].component).toBe("box");
             // @ts-ignore
-            expect(children[3].id).toBe("004");
+            expect(children[3].component).toBe("cylinder");
           });
         });
         describe.skip("origin tab: first, destination tab: last", () => {});
@@ -355,9 +356,9 @@ describe("State management", () => {
               );
             });
           });
-          describe.skip("nested", () => {
+          describe("nested", () => {
             describe("current tab group is a column", () => {
-              it.only("adds a sibling to the group with the new group above the current", () => {
+              it("adds a sibling to the group with the new group above the current", () => {
                 const { result } = renderHook(() => useEditorStore());
 
                 act(() => {
@@ -365,7 +366,7 @@ describe("State management", () => {
                   result.current.moveTabOntoView([1, 0], [1], "top");
                 });
                 expect(result.current.editorState).toEqual(
-                  twoTabGroupsSplitVerticallySplitUp
+                  threeTabGroupsSplitVertically
                 );
               });
             });

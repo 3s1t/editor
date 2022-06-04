@@ -59,16 +59,41 @@ export const twoTabGroupsSplitVertically: GroupTreeNode = {
       activeTabIndex: 0,
       children: [
         { type: "tab", component: "box" },
-        { type: "tab", component: "box" },
+        { type: "tab", component: "sphere" },
       ],
     },
     {
       type: "tabGroup",
       activeTabIndex: 0,
       children: [
-        { type: "tab", component: "box" },
-        { type: "tab", component: "box" },
+        { type: "tab", component: "cone" },
+        { type: "tab", component: "cylinder" },
       ],
+    },
+  ],
+};
+
+export const threeTabGroupsSplitVertically: GroupTreeNode = {
+  type: "colGroup",
+  children: [
+    {
+      type: "tabGroup",
+
+      activeTabIndex: 0,
+      children: [
+        { type: "tab", component: "box" },
+        { type: "tab", component: "sphere" },
+      ],
+    },
+    {
+      type: "tabGroup",
+      activeTabIndex: 0,
+      children: [{ type: "tab", component: "cone" }],
+    },
+    {
+      type: "tabGroup",
+      activeTabIndex: 0,
+      children: [{ type: "tab", component: "cylinder" }],
     },
   ],
 };
