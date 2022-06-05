@@ -14,6 +14,8 @@ import {
   TabTreeNode,
   useEditorStore,
 } from "~/state/editorState";
+import Engine from "~/components/modelComponents/Engine";
+import { useNavigate } from "@remix-run/react";
 
 const componentMap = {
   box: () => (
@@ -36,6 +38,7 @@ const componentMap = {
       <meshStandardMaterial color="rebeccapurple" />
     </Cylinder>
   ),
+  engine: () => <Engine />,
 };
 
 type DraggableTabItem = {
