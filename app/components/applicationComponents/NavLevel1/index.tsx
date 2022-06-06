@@ -13,38 +13,40 @@ type NavLevel1Option = {
   Icon: React.FC;
 };
 
-const navLevel1Options: NavLevel1Option[] = [
-  {
+const routeConfigMap: { [route: string]: NavLevel1Option } = {
+  "./explorer": {
     route: "./explorer",
     name: "Explorer",
     Icon: ExplorerIcon,
   },
-  {
+  "./search": {
     route: "./search",
     name: "Search",
     Icon: CodeIcon,
   },
-  {
+  "./source-control": {
     route: "./source-control",
     name: "Source Control",
     Icon: AnalysisIcon,
   },
-  {
+  "./extensions": {
     route: "./extensions",
     name: "Extensions",
     Icon: SettingsIcon,
   },
-];
+};
 
 interface NavLevel1Props {
   currentRoute?: string;
+  routes: string[];
 }
 
-export default function NavLevel1({ currentRoute }: NavLevel1Props) {
+export default function NavLevel1({ currentRoute, routes }: NavLevel1Props) {
   return (
     <>
       <ul className="menu bg-base-100 p-2 gap-2">
-        {navLevel1Options.map(({ route, Icon }) => {
+        {routes.map((route) => {
+          const { Icon } = routeConfigMap[route];
           const routeIsActive = route == `/${currentRoute}`;
           return (
             <li key={route}>
