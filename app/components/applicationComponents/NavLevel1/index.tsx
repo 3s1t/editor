@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "@remix-run/react";
 import {
-  ModelIcon,
   CodeIcon,
   AnalysisIcon,
   SettingsIcon,
+  ExplorerIcon,
 } from "~/components/applicationComponents/Icon";
 
 type NavLevel1Option = {
@@ -15,23 +15,23 @@ type NavLevel1Option = {
 
 const navLevel1Options: NavLevel1Option[] = [
   {
-    route: "/model",
-    name: "Model",
-    Icon: ModelIcon,
+    route: "./explorer",
+    name: "Explorer",
+    Icon: ExplorerIcon,
   },
   {
-    route: "/code",
-    name: "Code",
+    route: "./search",
+    name: "Search",
     Icon: CodeIcon,
   },
   {
-    route: "/analysis",
-    name: "Analysis",
+    route: "./source-control",
+    name: "Source Control",
     Icon: AnalysisIcon,
   },
   {
-    route: "/settings",
-    name: "Settings",
+    route: "./extensions",
+    name: "Extensions",
     Icon: SettingsIcon,
   },
 ];

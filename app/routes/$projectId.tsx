@@ -8,13 +8,8 @@ import NavLevel1 from "~/components/applicationComponents/NavLevel1";
 // };
 
 export default function () {
-  const { projectId } = useParams();
-
-  console.log({ projectId });
-
   return (
     <div className="flex h-screen w-screen">
-      <NavLevel1 currentRoute={projectId} />
       <Outlet />
     </div>
   );
