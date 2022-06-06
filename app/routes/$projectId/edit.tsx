@@ -3,7 +3,7 @@ import NavLevel1 from "~/components/applicationComponents/NavLevel1";
 
 export default function () {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen w-screen">
       <NavLevel1 />
 
       <Outlet />
