@@ -6,13 +6,8 @@ import Editor from "~/components/applicationComponents/Editor";
 import Scene from "~/components/applicationComponents/Scene";
 import CamFollowerScene from "~/components/applicationComponents/CamFollowerScene";
 import Engine from "~/components/modelComponents/Engine";
-import { EditorState } from "~/state";
 import PistonAssembly from "~/components/modelComponents/PistonAssembly";
-import {
-  EditorTreeNode,
-  GroupTreeNode,
-  useEditorStore,
-} from "~/state/editorState";
+import { GroupTreeNode, useEditorStore } from "~/state/editorState";
 
 export const loader: LoaderFunction = async () => {
   const simpleEditorState2: GroupTreeNode = {
@@ -42,12 +37,12 @@ export const loader: LoaderFunction = async () => {
           {
             type: "tab",
             name: "c",
-            component: "box",
+            component: "engine",
           },
           {
             type: "tab",
             name: "d",
-            component: "sphere",
+            component: "box",
           },
         ],
       },
@@ -127,12 +122,13 @@ export default function () {
 
   return (
     <div className="w-full h-full">
-      {navLevel1 == "model" && <Editor tree={editorState} />}
-      {navLevel1 == "code" && (
+      <Editor tree={editorState} />
+      {/* {navLevel1 == "model" && } */}
+      {/* {navLevel1 == "code" && (
         <Scene>
           <Engine navigate={navigate} />
         </Scene>
-      )}
+      )} */}
       {navLevel1 == "analysis" && <CamFollowerScene />}
       {navLevel1 == "settings" && (
         <Scene>

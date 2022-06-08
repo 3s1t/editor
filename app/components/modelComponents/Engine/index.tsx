@@ -9,14 +9,16 @@ import { revolutionsPerMinuteToRadiansPerSecond } from "~/helpers";
 import Cam from "../Cam";
 
 interface EngineProps {
-  navigate: (to: string) => void;
+  navigate?: (to: string) => void;
 }
 
 export default function Engine({ navigate }: EngineProps) {
   const setElapsedTime = useEngineStore((state) => state.setElapsedTime);
 
   const crankshaftAngle = useEngineStore((state) => state.crankshaftAngle);
-  const setCrankshaftAngle = useEngineStore((state) => state.setCrankshaftAngle);
+  const setCrankshaftAngle = useEngineStore(
+    (state) => state.setCrankshaftAngle
+  );
 
   const [{ crankshaftSpeed, on }] = useControls(() => ({
     Engine: folder({
