@@ -33,13 +33,13 @@
 - 3s1t.xyz
   - /{project_id}
     - /edit
-      - explorer
-      - search
-      - source control
-      - extensions
+      - /explorer - can select all models (shapes + engine parts) from Secondary nav bar
+      - /search - placeholder text
+      - /source control - placeholder text
+      - /extensions - placeholder text
     - /view
-      - explorer
-      - search
-      - extensions
+      - /explorer - placeholder text
+      - /search - placeholder text
+      - /extensions - placeholder text
 - searchParams
   - ?tabTreeId={tabTreeId}
